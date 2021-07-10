@@ -5,6 +5,8 @@ import com.example.demo.repositories.UserDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserDetailsService {
@@ -13,6 +15,14 @@ public class UserDetailsService {
 
     public UserDetails save(UserDetails userDetails) {
         return repository.save(userDetails);
+    }
+
+    public List<UserDetails> getAllByIpAddress(String ipAddress) {
+        return repository.findAllByIpAddress(ipAddress);
+    }
+
+    public List<UserDetails> getAll() {
+        return repository.findAll();
     }
 
 }

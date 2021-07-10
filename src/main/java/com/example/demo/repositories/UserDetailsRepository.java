@@ -1,18 +1,13 @@
 package com.example.demo.repositories;
 
 import com.example.demo.models.UserDetails;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public class UserDetailsRepository {
+public interface UserDetailsRepository extends MongoRepository<UserDetails, String> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    public UserDetails save(UserDetails userDetails) {
-        logger.info(userDetails.toString());
-        return userDetails;
-    }
-
+    List<UserDetails> findAllByIpAddress(String ipAddress);
 }
