@@ -23,7 +23,9 @@ public class LogMethodCallAspect {
     @Before("@annotation(com.example.demo.aspects.LogMethodCall)")
     public void logParameters(JoinPoint joinPoint) {
         String parameters = getParametersAsString(getParameters(joinPoint));
-        logger.info(String.format("%s(%s)", joinPoint.getSignature().getName(), parameters));
+
+        if (parameters.isBlank()) logger.info("Method call: " + joinPoint.getSignature().getName() + "()");
+        else logger.info(String.format("Method call: %s(%s)", joinPoint.getSignature().getName(), parameters));
     }
 
     private String getParametersAsString(Map<String, String> parameters) {
@@ -31,7 +33,11 @@ public class LogMethodCallAspect {
         for (String param : parameters.keySet()) {
             sb.append(param).append(":").append(parameters.get(param)).append(", ");
         }
-        return sb.substring(0, sb.length() - 2);
+        try {
+            return sb.substring(0, sb.length() - 2);
+        } catch (Exception ex) {
+            return "";
+        }
     }
 
     private Map<String, String> getParameters(JoinPoint joinPoint) {

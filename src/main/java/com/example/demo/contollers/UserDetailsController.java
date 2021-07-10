@@ -30,6 +30,7 @@ public class UserDetailsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @LogMethodCall
     @GetMapping
     public ResponseEntity<List<UserDetailsDTO>> getAll() {
         List<UserDetailsDTO> response = userDetailsService.getAll().stream().map(detailsMapper::userDetailsToDTO).collect(Collectors.toList());
