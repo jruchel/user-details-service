@@ -2,3 +2,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://andrzejduda:andrzejduda@localhost:27017/user-details?authSource=admin
+filter-service:
+  host: localhost
+  port: 8081

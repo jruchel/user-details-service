@@ -1,8 +1,9 @@
 package com.example.demo.aspects;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +21,15 @@ public class LogMethodCallAspect {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Before("@annotation(com.example.demo.aspects.LogMethodCall)")
-    public void logParameters(JoinPoint joinPoint) {
+    @Around("@annotation(com.example.demo.aspects.LogMethodCall)")
+    public Object logParameters(ProceedingJoinPoint joinPoint) throws Throwable {
         String parameters = getParametersAsString(getParameters(joinPoint));
 
         if (parameters.isBlank()) logger.info("Method call: " + joinPoint.getSignature().getName() + "()");
-        else logger.info(String.format("Method call: %s(%s)", joinPoint.getSignature().getName(), parameters));
+        else
+            logger.info(String.format("Method call: %s(%s): result = %s", joinPoint.getSignature().getName(), parameters, joinPoint.proceed()));
+
+        return joinPoint.proceed();
     }
 
     private String getParametersAsString(Map<String, String> parameters) {

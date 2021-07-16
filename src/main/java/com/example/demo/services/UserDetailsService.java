@@ -17,6 +17,10 @@ public class UserDetailsService {
         return repository.save(userDetails);
     }
 
+    public List<UserDetails> saveAll(List<UserDetails> userDetails) {
+        return repository.saveAll(userDetails);
+    }
+
     public List<UserDetails> getAllByIpAddress(String ipAddress) {
         return repository.findAllByIpAddress(ipAddress);
     }
