@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://andrzejduda:andrzejduda@localhost:27017/user-details?authSource=admin
+      auto-index-creation: true
 filter-service:
   host: localhost
   port: 8084
